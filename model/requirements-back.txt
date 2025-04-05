@@ -19,7 +19,7 @@ langgraph==0.0.32
 
 # HuggingFace embeddings
 sentence-transformers==2.6.1
-langchain-huggingface==0.0.5
+langchain-huggingface==0.1.2
 
 # ChromaDB
 chromadb==0.4.24
