@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8080
 
 # Ejecutar Streamlit escuchando en 0.0.0.0:8080 (requerido por Cloud Run)
-CMD ["streamlit", "run", "main.py", "--server.port=8080", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8080", "--server.address=0.0.0.0"]
