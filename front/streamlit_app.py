@@ -5,12 +5,11 @@ import uuid
 # ---------------- CONFIG ----------------
 API_URL = "http://localhost:8000/chat"
 
-st.set_page_config(page_title="RAG Chatbot", layout="wide")
+st.set_page_config(page_title="QuistBuilder Chatbot", layout="wide")
 
 # ---------- SIDEBAR ----------
 with st.sidebar:
-    st.title("💬 QuistBuilder Chatbot")
-    st.markdown("QuistBuilder Chatbot")
+    st.title("QuistBuilder Chatbot")
     st.markdown("---")
     st.markdown("📄 Model: Gemini + ChromaDB")
 
