@@ -4,39 +4,59 @@ import smtplib
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 from typing import Optional, TypedDict
-
 from langgraph.graph import END, StateGraph
-from langchain.chat_models import ChatOpenAI
+from langchain_google_vertexai import ChatVertexAI
 from langchain.prompts.chat import ChatPromptTemplate
 
-# Cargar variables de entorno
+# Load environment variables
 load_dotenv()
 SENDER_EMAIL = os.getenv("SENDER_EMAIL")
 SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
 RECEIVER_EMAIL = os.getenv("RECEIVER_EMAIL")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-# ----------- ESTADO ----------- #
+# ----------- STATE ----------- #
 class ContactState(TypedDict, total=False):
     input: str
+    session_id: str
+    is_first_message: Optional[bool]
     email: Optional[str]
     name: Optional[str]
     email_sent: Optional[bool]
     error: Optional[str]
     response: Optional[str]
 
-# ----------- NODO 1: Extraer info ----------- #
+# ----------- NODE 0: Greeting (only for first message) ----------- #
+def greeting_node(state: ContactState) -> ContactState:
+    if state.get("is_first_message"):
+        greeting = (
+            "Hey there! I’m the QuistBuilder assistant—excited to help you out!\n"
+            "To get started, may I have your name, email, and a bit about the service you’re looking for?"
+        )
+        print(">>> [AGENT] Sending initial greeting.")
+        state["greeting"] = greeting
+    else:
+        print(">>> [AGENT] No greeting sent. Not the first message.")
+    return state
+
+# ----------- NODE 1: Extract contact info ----------- #
 def extract_info(state: ContactState) -> ContactState:
     text = state["input"]
-    print(">>> [AGENTE] Texto recibido:", text)
+    print(">>> [AGENT] Received text:", text)
 
     email_match = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', text)
-    name_match = re.search(r"\bmy name is ([A-Z][a-z]+)", text, re.IGNORECASE)
     
+    # CORREGIDO: eliminar doble barra \\
+    name_match = re.search(r"\bmy name is ([A-Z][a-z]+)", text, re.IGNORECASE)
+    if not name_match:
+        name_match = re.search(r"\bI am ([A-Z][a-z]+)", text, re.IGNORECASE)
+    if not name_match:
+        name_match = re.search(r"\bI'm ([A-Z][a-z]+)", text, re.IGNORECASE)
+
     if name_match:
-        print(">>> [AGENTE] Nombre detectado:", name_match.group(1))
+        print(">>> [AGENT] Name detected:", name_match.group(1))
     if email_match:
-        print(">>> [AGENTE] Email detectado:", email_match.group(0))
+        print(">>> [AGENT] Email detected:", email_match.group(0))
 
     return {
         **state,
@@ -44,26 +64,19 @@ def extract_info(state: ContactState) -> ContactState:
         "name": name_match.group(1) if name_match else None
     }
 
-# ----------- NODO 2: Decisión ----------- #
+# ----------- NODE 2: Decision ----------- #
 def should_send_email(state: ContactState) -> str:
     if state.get("email") or state.get("name"):
         return "send_email"
     return "skip_email"
 
-# ----------- NODO 3: Enviar email ----------- #
+# ----------- NODE 3: Send email ----------- #
 def send_email(state: ContactState) -> ContactState:
     name = state.get("name") or "Not provided"
     email = state.get("email") or "Not provided"
     message = state.get("input", "")
 
-    body = f"""🚨 New contact detected:
-
-Name: {name}
-Email: {email}
-
-Message:
-{message}
-"""
+    body = f"""\n🚨 New contact detected:\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message}\n"""
 
     msg = MIMEText(body)
     msg["Subject"] = "🚨 New chatbot lead"
@@ -81,10 +94,10 @@ Message:
 
     return state
 
-# ----------- NODO 4: Generar respuesta LLM ----------- #
+# ----------- NODE 4: Generate response ----------- #
 def generate_response(state: ContactState) -> ContactState:
     question = state["input"]
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo")
+    llm = ChatVertexAI(model_name="gemini-2.0-flash-001", temperature=0.0, max_tokens=2000)
 
     prompt = ChatPromptTemplate.from_messages([
         ("system", "You are a helpful assistant."),
@@ -94,20 +107,26 @@ def generate_response(state: ContactState) -> ContactState:
     messages = prompt.format_messages(question=question)
     result = llm(messages)
 
-    state["response"] = result.content
+    full_response = result.content
+    if "greeting" in state:
+        full_response = f"{state['greeting']}\n\n{full_response}"
+        del state["greeting"]
+
+    state["response"] = full_response
     return state
 
-# ----------- AGENTE: CONSTRUCCIÓN ----------- #
+# ----------- BUILD THE AGENT ----------- #
 def create_contact_agent():
     builder = StateGraph(ContactState)
 
+    builder.add_node("greeting_node", greeting_node)
     builder.add_node("extract_info", extract_info)
     builder.add_node("send_email", send_email)
     builder.add_node("generate_response", generate_response)
 
-    builder.set_entry_point("extract_info")
+    builder.set_entry_point("greeting_node")
+    builder.add_edge("greeting_node", "extract_info")
 
-    # Evaluar si debe enviar email
     builder.add_conditional_edges(
         "extract_info",
         should_send_email,
@@ -117,7 +136,6 @@ def create_contact_agent():
         }
     )
 
-    # Si envió el email, sigue a respuesta
     builder.add_edge("send_email", "generate_response")
     builder.add_edge("generate_response", END)
 

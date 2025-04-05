@@ -1,198 +1,36 @@
-2025-04-01 17:46:37,029 - INFO - >>> [STARTUP] Inicializando pipeline con agente integrado...
-2025-04-01 17:46:45,053 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+2025-04-01 17:40:12,808 - INFO - >>> [STARTUP] Inicializando pipeline sin RetrievalQA...
+2025-04-01 17:40:22,659 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
 
-2025-04-01 17:46:45,245 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:46:45,245 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:46:48,191 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-04-01 17:46:48,764 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:46:48,765 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:46:50,579 - INFO - \u2705 [STARTUP] Sistema listo para responder.
-2025-04-01 17:50:41,462 - INFO - >>> [STARTUP] Inicializando pipeline con agente integrado...
-2025-04-01 17:50:48,969 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+2025-04-01 17:40:22,928 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:40:22,928 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:40:25,475 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-04-01 17:40:26,079 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:40:26,080 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:40:29,139 - INFO - \u2705 [STARTUP] Sistema listo para responder.
+2025-04-01 17:41:24,792 - INFO - >>> [STARTUP] Inicializando pipeline sin RetrievalQA...
+2025-04-01 17:41:34,100 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
 
-2025-04-01 17:50:49,160 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:50:49,160 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:50:51,529 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-04-01 17:50:52,092 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:50:52,092 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:50:54,368 - INFO - \u2705 [STARTUP] Sistema listo para responder.
-2025-04-01 17:50:57,218 - INFO - >>> [STARTUP] Inicializando pipeline con agente integrado...
-2025-04-01 17:51:06,044 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+2025-04-01 17:41:34,374 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:41:34,374 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:41:37,262 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-04-01 17:41:38,284 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:41:38,284 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:41:42,149 - INFO - \u2705 [STARTUP] Sistema listo para responder.
+2025-04-01 17:41:46,516 - INFO - >>> [STARTUP] Inicializando pipeline sin RetrievalQA...
+2025-04-01 17:41:55,808 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
 
-2025-04-01 17:51:06,274 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:51:06,274 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:51:10,160 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-04-01 17:51:10,816 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:51:10,816 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:51:13,439 - INFO - \u2705 [STARTUP] Sistema listo para responder.
-2025-04-01 17:52:13,243 - INFO - >>> [STARTUP] Inicializando pipeline con agente integrado...
-2025-04-01 17:52:21,184 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+2025-04-01 17:41:56,102 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:41:56,102 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:41:58,454 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-04-01 17:41:59,114 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:41:59,114 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:42:01,540 - INFO - \u2705 [STARTUP] Sistema listo para responder.
+2025-04-01 17:43:01,534 - INFO - >>> [STARTUP] Inicializando pipeline sin RetrievalQA...
+2025-04-01 17:43:10,438 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
 
-2025-04-01 17:52:21,387 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:52:21,387 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:52:23,732 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-04-01 17:52:24,323 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:52:24,323 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:52:26,130 - INFO - \u2705 [STARTUP] Sistema listo para responder.
-2025-04-01 17:53:53,345 - INFO - >>> [STARTUP] Inicializando pipeline con agente integrado...
-2025-04-01 17:54:01,314 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2025-04-01 17:54:01,500 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:54:01,500 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:54:03,852 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-04-01 17:54:04,414 - INFO - Use pytorch device_name: cpu
-2025-04-01 17:54:04,414 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 17:54:06,372 - INFO - \u2705 [STARTUP] Sistema listo para responder.
-2025-04-01 20:02:13,988 - INFO - >>> [STARTUP] Inicializando pipeline con agente integrado...
-2025-04-01 20:02:34,382 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2025-04-01 20:02:34,811 - INFO - Use pytorch device_name: cpu
-2025-04-01 20:02:34,812 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 20:02:37,650 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-04-01 20:02:38,562 - INFO - Use pytorch device_name: cpu
-2025-04-01 20:02:38,562 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 20:02:40,310 - INFO - \u2705 [STARTUP] Sistema listo para responder.
-2025-04-01 20:02:52,308 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-01 20:02:52,308 - INFO - >>> Pregunta: my name is Felipe
-2025-04-01 20:02:56,914 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-01 20:02:56,934 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'my name is Felipe', 'email': None, 'name': 'Felipe', 'email_sent': True, 'response': 'Nice to meet you, Felipe! How can I assist you today?'}
-2025-04-01 20:02:56,934 - INFO - >> Nombre detectado: Felipe
-2025-04-01 20:02:56,934 - INFO - >> Email detectado: None
-2025-04-01 20:02:56,934 - INFO - >> Email enviado: True
-2025-04-01 20:02:56,934 - INFO - >> Respuesta del agente: Nice to meet you, Felipe! How can I assist you today?
-2025-04-01 20:03:37,611 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-01 20:03:37,611 - INFO - >>> Pregunta: Name: Felipe, Email: felipe@example.com
-2025-04-01 20:03:40,416 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-01 20:03:40,426 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'Name: Felipe, Email: felipe@example.com', 'email': 'felipe@example.com', 'name': None, 'email_sent': True, 'response': 'Hello Felipe! How can I assist you today?'}
-2025-04-01 20:03:40,426 - INFO - >> Nombre detectado: None
-2025-04-01 20:03:40,426 - INFO - >> Email detectado: felipe@example.com
-2025-04-01 20:03:40,426 - INFO - >> Email enviado: True
-2025-04-01 20:03:40,426 - INFO - >> Respuesta del agente: Hello Felipe! How can I assist you today?
-2025-04-01 22:13:30,674 - INFO - >>> [STARTUP] Inicializando pipeline con agente integrado...
-2025-04-01 22:13:38,701 - WARNING - From C:\Users\Felipe\anaconda3\envs\MachineLearning\Lib\site-packages\tf_keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
-
-2025-04-01 22:13:38,884 - INFO - Use pytorch device_name: cpu
-2025-04-01 22:13:38,884 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 22:13:41,566 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
-2025-04-01 22:13:42,147 - INFO - Use pytorch device_name: cpu
-2025-04-01 22:13:42,147 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
-2025-04-01 22:13:44,303 - INFO - \u2705 [STARTUP] Sistema listo para responder.
-2025-04-01 22:13:52,926 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-01 22:13:52,926 - INFO - >>> Pregunta: User: hello, what do you do? 
-User: hello, what do you do? 
-2025-04-01 22:13:54,189 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-01 22:13:54,190 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'User: hello, what do you do? \nUser: hello, what do you do? ', 'email': None, 'name': None, 'response': "I'm here to help you with any questions or tasks you may have. Feel free to ask me anything!"}
-2025-04-01 22:13:54,191 - INFO - >> Nombre detectado: None
-2025-04-01 22:13:54,191 - INFO - >> Email detectado: None
-2025-04-01 22:13:54,191 - INFO - >> Email enviado: None
-2025-04-01 22:13:54,191 - INFO - >> Respuesta del agente: I'm here to help you with any questions or tasks you may have. Feel free to ask me anything!
-2025-04-01 22:14:03,601 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-01 22:14:03,601 - INFO - >>> Pregunta: User: hello, what do you do? 
-User: what is quist builder? 
-User: what is quist builder? 
-2025-04-01 22:14:05,763 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-01 22:14:05,764 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'User: hello, what do you do? \nUser: what is quist builder? \nUser: what is quist builder? ', 'email': None, 'name': None, 'response': 'Hello! I\'m here to assist you with any questions you might have. \n\nAs for your question about "quist builder," it seems like there might be a typo. Did you mean to ask about a "quiz builder"? If so, a quiz builder is a tool or software that allows you to create quizzes, assessments, or surveys online. These tools often provide templates, customization options, and features for analyzing results. Let me know if you need more information or if you meant something else.'}
-2025-04-01 22:14:05,765 - INFO - >> Nombre detectado: None
-2025-04-01 22:14:05,765 - INFO - >> Email detectado: None
-2025-04-01 22:14:05,765 - INFO - >> Email enviado: None
-2025-04-01 22:14:05,765 - INFO - >> Respuesta del agente: Hello! I'm here to assist you with any questions you might have. 
-
-As for your question about "quist builder," it seems like there might be a typo. Did you mean to ask about a "quiz builder"? If so, a quiz builder is a tool or software that allows you to create quizzes, assessments, or surveys online. These tools often provide templates, customization options, and features for analyzing results. Let me know if you need more information or if you meant something else.
-2025-04-01 22:14:36,808 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-01 22:14:36,808 - INFO - >>> Pregunta: User: hello, what do you do? 
-User: what is quist builder? 
-User: no, quist builder, the company of this chatbot
-User: no, quist builder, the company of this chatbot
-2025-04-01 22:14:38,248 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-01 22:14:38,251 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'User: hello, what do you do? \nUser: what is quist builder? \nUser: no, quist builder, the company of this chatbot\nUser: no, quist builder, the company of this chatbot', 'email': None, 'name': None, 'response': 'Hello! I am here to assist you with any questions or tasks you may have. \n\nQuist Builder is a company that specializes in creating and developing chatbots for various purposes. They provide services to businesses looking to enhance customer interaction and streamline processes through the use of chatbots. If you have any specific questions about Quist Builder or their services, feel free to ask!'}
-2025-04-01 22:14:38,251 - INFO - >> Nombre detectado: None
-2025-04-01 22:14:38,251 - INFO - >> Email detectado: None
-2025-04-01 22:14:38,251 - INFO - >> Email enviado: None
-2025-04-01 22:14:38,251 - INFO - >> Respuesta del agente: Hello! I am here to assist you with any questions or tasks you may have. 
-
-Quist Builder is a company that specializes in creating and developing chatbots for various purposes. They provide services to businesses looking to enhance customer interaction and streamline processes through the use of chatbots. If you have any specific questions about Quist Builder or their services, feel free to ask!
-2025-04-01 22:14:58,784 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-01 22:14:58,784 - INFO - >>> Pregunta: User: what is quist builder? 
-User: no, quist builder, the company of this chatbot
-User: my name is Felipe and my email is felipe@example.com
-User: my name is Felipe and my email is felipe@example.com
-2025-04-01 22:15:03,045 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-01 22:15:03,046 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'User: what is quist builder? \nUser: no, quist builder, the company of this chatbot\nUser: my name is Felipe and my email is felipe@example.com\nUser: my name is Felipe and my email is felipe@example.com', 'email': 'felipe@example.com', 'name': 'Felipe', 'email_sent': True, 'response': 'Quist Builder is a company that specializes in developing chatbots to assist with various tasks. Thank you for providing your name as Felipe and your email as felipe@example.com. How can I assist you further, Felipe?'}
-2025-04-01 22:15:03,047 - INFO - >> Nombre detectado: Felipe
-2025-04-01 22:15:03,047 - INFO - >> Email detectado: felipe@example.com
-2025-04-01 22:15:03,047 - INFO - >> Email enviado: True
-2025-04-01 22:15:03,047 - INFO - >> Respuesta del agente: Quist Builder is a company that specializes in developing chatbots to assist with various tasks. Thank you for providing your name as Felipe and your email as felipe@example.com. How can I assist you further, Felipe?
-2025-04-02 16:30:04,300 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-02 16:30:04,300 - INFO - >>> Pregunta: User: Hello 
-User: Hello 
-2025-04-02 16:30:06,716 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-02 16:30:06,720 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'User: Hello \nUser: Hello ', 'email': None, 'name': None, 'response': 'Hello! How can I assist you today?'}
-2025-04-02 16:30:06,721 - INFO - >> Nombre detectado: None
-2025-04-02 16:30:06,721 - INFO - >> Email detectado: None
-2025-04-02 16:30:06,721 - INFO - >> Email enviado: None
-2025-04-02 16:30:06,721 - INFO - >> Respuesta del agente: Hello! How can I assist you today?
-2025-04-02 16:30:51,047 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-02 16:30:51,048 - INFO - >>> Pregunta: User: Hello 
-User: what's the business contact? 
-User: what's the business contact? 
-2025-04-02 16:30:53,259 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-02 16:30:53,264 - INFO - >> \U0001f50d Estado completo del agente: {'input': "User: Hello \nUser: what's the business contact? \nUser: what's the business contact? ", 'email': None, 'name': None, 'response': "Hello! I can help you with that. Are you asking for a specific business's contact information, or are you looking for general advice on how to find business contacts?"}
-2025-04-02 16:30:53,264 - INFO - >> Nombre detectado: None
-2025-04-02 16:30:53,264 - INFO - >> Email detectado: None
-2025-04-02 16:30:53,264 - INFO - >> Email enviado: None
-2025-04-02 16:30:53,264 - INFO - >> Respuesta del agente: Hello! I can help you with that. Are you asking for a specific business's contact information, or are you looking for general advice on how to find business contacts?
-2025-04-02 16:31:16,835 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-02 16:31:16,836 - INFO - >>> Pregunta: User: Hello 
-User: what's the business contact? 
-User: which services do you offer? 
-User: which services do you offer? 
-2025-04-02 16:31:18,493 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-02 16:31:18,499 - INFO - >> \U0001f50d Estado completo del agente: {'input': "User: Hello \nUser: what's the business contact? \nUser: which services do you offer? \nUser: which services do you offer? ", 'email': None, 'name': None, 'response': 'Hello! To better assist you, could you please provide more information about the business you are inquiring about?'}
-2025-04-02 16:31:18,499 - INFO - >> Nombre detectado: None
-2025-04-02 16:31:18,499 - INFO - >> Email detectado: None
-2025-04-02 16:31:18,499 - INFO - >> Email enviado: None
-2025-04-02 16:31:18,499 - INFO - >> Respuesta del agente: Hello! To better assist you, could you please provide more information about the business you are inquiring about?
-2025-04-02 16:31:33,780 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-02 16:31:33,780 - INFO - >>> Pregunta: User: what's the business contact? 
-User: which services do you offer? 
-User: my name is Felipe and my email is felipe@example.com
-User: my name is Felipe and my email is felipe@example.com
-2025-04-02 16:31:37,700 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-02 16:31:37,705 - INFO - >> \U0001f50d Estado completo del agente: {'input': "User: what's the business contact? \nUser: which services do you offer? \nUser: my name is Felipe and my email is felipe@example.com\nUser: my name is Felipe and my email is felipe@example.com", 'email': 'felipe@example.com', 'name': 'Felipe', 'email_sent': True, 'response': 'Hello Felipe! Thank you for providing your name and email address. How can I assist you further today?'}
-2025-04-02 16:31:37,709 - INFO - >> Nombre detectado: Felipe
-2025-04-02 16:31:37,709 - INFO - >> Email detectado: felipe@example.com
-2025-04-02 16:31:37,709 - INFO - >> Email enviado: True
-2025-04-02 16:31:37,709 - INFO - >> Respuesta del agente: Hello Felipe! Thank you for providing your name and email address. How can I assist you further today?
-2025-04-02 16:33:18,097 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-02 16:33:18,097 - INFO - >>> Pregunta: User: which services do you offer? 
-User: my name is Felipe and my email is felipe@example.com
-User: how can i contact quist builder? 
-User: how can i contact quist builder? 
-2025-04-02 16:33:23,101 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-02 16:33:23,105 - INFO - >> \U0001f50d Estado completo del agente: {'input': 'User: which services do you offer? \nUser: my name is Felipe and my email is felipe@example.com\nUser: how can i contact quist builder? \nUser: how can i contact quist builder? ', 'email': 'felipe@example.com', 'name': 'Felipe', 'email_sent': True, 'response': 'I can provide information on various services, help with contacting businesses, and assist with any other inquiries you may have. If you have any specific questions or need assistance, feel free to ask!'}
-2025-04-02 16:33:23,105 - INFO - >> Nombre detectado: Felipe
-2025-04-02 16:33:23,105 - INFO - >> Email detectado: felipe@example.com
-2025-04-02 16:33:23,105 - INFO - >> Email enviado: True
-2025-04-02 16:33:23,105 - INFO - >> Respuesta del agente: I can provide information on various services, help with contacting businesses, and assist with any other inquiries you may have. If you have any specific questions or need assistance, feel free to ask!
-2025-04-02 16:33:40,108 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-02 16:33:40,108 - INFO - >>> Pregunta: User: my name is Felipe and my email is felipe@example.com
-User: how can i contact quist builder? 
-User: what's the business phone number? 
-User: what's the business phone number? 
-2025-04-02 16:33:44,284 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-02 16:33:44,308 - INFO - >> \U0001f50d Estado completo del agente: {'input': "User: my name is Felipe and my email is felipe@example.com\nUser: how can i contact quist builder? \nUser: what's the business phone number? \nUser: what's the business phone number? ", 'email': 'felipe@example.com', 'name': 'Felipe', 'email_sent': True, 'response': "To contact Quist Builder, you can reach out to them via phone at their business phone number. Unfortunately, I do not have specific information on Quist Builder's phone number. I recommend visiting their website or looking up their contact details online to get in touch with them. If you have any other questions or need further assistance, feel free to ask!"}
-2025-04-02 16:33:44,310 - INFO - >> Nombre detectado: Felipe
-2025-04-02 16:33:44,310 - INFO - >> Email detectado: felipe@example.com
-2025-04-02 16:33:44,310 - INFO - >> Email enviado: True
-2025-04-02 16:33:44,311 - INFO - >> Respuesta del agente: To contact Quist Builder, you can reach out to them via phone at their business phone number. Unfortunately, I do not have specific information on Quist Builder's phone number. I recommend visiting their website or looking up their contact details online to get in touch with them. If you have any other questions or need further assistance, feel free to ask!
-2025-04-02 16:34:36,236 - INFO - >>> [QUERY] Endpoint recibido.
-2025-04-02 16:34:36,236 - INFO - >>> Pregunta: User: how can i contact quist builder? 
-User: what's the business phone number? 
-User: what's quist builder pricing?
-User: what's quist builder pricing?
-2025-04-02 16:34:38,436 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-04-02 16:34:38,483 - INFO - >> \U0001f50d Estado completo del agente: {'input': "User: how can i contact quist builder? \nUser: what's the business phone number? \nUser: what's quist builder pricing?\nUser: what's quist builder pricing?", 'email': None, 'name': None, 'response': "I'm sorry, but I don't have specific information about Quist Builder. You can try searching online for their contact information, business phone number, and pricing details on their official website or business directories. If you need any general advice or assistance, feel free to ask!"}
-2025-04-02 16:34:38,483 - INFO - >> Nombre detectado: None
-2025-04-02 16:34:38,484 - INFO - >> Email detectado: None
-2025-04-02 16:34:38,484 - INFO - >> Email enviado: None
-2025-04-02 16:34:38,484 - INFO - >> Respuesta del agente: I'm sorry, but I don't have specific information about Quist Builder. You can try searching online for their contact information, business phone number, and pricing details on their official website or business directories. If you need any general advice or assistance, feel free to ask!
+2025-04-01 17:43:10,630 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:43:10,630 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:43:12,892 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-04-01 17:43:13,468 - INFO - Use pytorch device_name: cpu
+2025-04-01 17:43:13,468 - INFO - Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2025-04-01 17:43:15,989 - INFO - \u2705 [STARTUP] Sistema listo para responder.

@@ -1,0 +1,35 @@
+fastapi==0.110.0
+uvicorn[standard]==0.27.1
+python-dotenv==1.0.1
+requests==2.31.0
+pydantic==1.10.13
+
+# Google Cloud
+google-cloud-aiplatform==1.45.0
+google-auth==2.29.0
+google-api-python-client==2.126.0
+grpcio==1.62.1
+protobuf==4.25.3
+
+# LangChain and VertexAI
+langchain==0.1.14
+langchain-core==0.1.38
+langchain-google-vertexai==1.0.1
+langgraph==0.0.32
+
+# HuggingFace embeddings
+sentence-transformers==2.6.1
+langchain-huggingface==0.0.5
+
+# ChromaDB
+chromadb==0.4.24
+langchain-community==0.0.34
+
+# PDF handling
+pypdf==4.2.0
+
+# Email handling
+secure-smtplib  # (comes built-in, but some distros like explicit)
+
+# Optional utilities
+tqdm==4.66.2

@@ -1,85 +1,145 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
-from dotenv import load_dotenv
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Chroma
 import os
 import logging
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+from retriever import retrieve_documents
 from agents import create_contact_agent
-from rag import extract_text_from_docx, chunk_text, build_vectorstore, get_retriever
+from google.cloud import aiplatform
+from pydantic import BaseModel
+from langchain_google_vertexai import ChatVertexAI
 
-# ---------------- Logging ---------------- #
-logging.basicConfig(
-    filename="debug.log",
-    filemode="a",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
-# ---------------- Configuración ---------------- #
-DOC_PATH = "data/Response Guide - QuistBuilder.docx"
-PERSIST_DIR = "chroma_db"
-MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-
-# Cargar variables de entorno
+# Load env variables from .env file
 load_dotenv()
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
-# Inicializar FastAPI
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+
+# Get environment variables
+project_id = os.getenv("PROJECT_ID")
+service_account_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
+# Verify that environment variables have been set 
+if not service_account_key or not project_id:
+    raise ValueError("Environment variables are not correctly set.")
+
+# ───────────────────────────────────────────────────────────────
+# ───────────────────────────────────────────────────────────────
+# ───────────────────────────────────────────────────────────────
+
+# credentials_path = "/tmp/service-account.json"
+
+# try:
+#      with open(credentials_path, "w") as f:
+#          f.write(service_account_key)
+#      os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
+# except Exception as e:
+#      raise RuntimeError(f"Error al escribir el archivo de credenciales: {e}")
+
+# ───────────────────────────────────────────────────────────────
+# ───────────────────────────────────────────────────────────────
+# ───────────────────────────────────────────────────────────────
+
+# Initialize VertexAI
+try:
+    aiplatform.init(project=project_id, location="us-central1")
+except Exception as e:
+    logging.error(f"Error initializing Vertex AI: {e}")
+    raise
+
+seen_sessions = set()
+
+# Logging setup
+logging.basicConfig(level=logging.INFO)
+
+# Initialize FastAPI
 app = FastAPI()
 
-# Variables globales
-retriever = None
-agent = None
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# ---------------- Startup ---------------- #
-@app.on_event("startup")
-def startup_event():
-    global retriever, agent
+# Load system prompt from external file
+with open("system_prompt.txt", "r", encoding="utf-8") as f:
+    SYSTEM_PROMPT = f.read().strip()
 
-    logging.info(">>> [STARTUP] Inicializando pipeline con agente integrado...")
+# Initialize contact agent
+agent = create_contact_agent()
 
-    # Procesar documento Word
-    text = extract_text_from_docx(DOC_PATH)
-    chunks = chunk_text(text)
-    build_vectorstore(chunks)
+# Load Gemini-Pro model
+chat_model = ChatVertexAI(model_name="gemini-2.0-flash-001", temperature=0.0, max_output_tokens=2000)
 
-    # Inicializar vectorstore
-    retriever = get_retriever()
+class ChatRequest(BaseModel):
+    prompt: str
+    session_id: str
 
-    # Crear agente una sola vez
-    agent = create_contact_agent()
+@app.post("/chat")
+def chat(request: ChatRequest):
+    try:
+        session_id = request.session_id or "default_session"
+        is_first_message = session_id not in seen_sessions
 
-    logging.info("✅ [STARTUP] Sistema listo para responder.")
+        if is_first_message:
+            seen_sessions.add(session_id)
 
-# ---------------- Endpoint ---------------- #
-class QueryRequest(BaseModel):
-    question: str
+        # Step 1: Run contact agent
+        agent_output = agent.invoke({
+            "input": request.prompt,
+            "session_id": session_id
+        })
 
-@app.post("/query")
-def query(request: QueryRequest):
-    global agent
+        # Step 2: Retrieve relevant context
+        try:
+            context = retrieve_documents(request.prompt, k=10)
+            if not context.strip():
+                context = "No relevant information found in the knowledge base."
+        except Exception as e:
+            logging.error(f"❌ Error retrieving context: {e}")
+            context = "Error retrieving context."
 
-    logging.info(">>> [QUERY] Endpoint recibido.")
-    logging.info(">>> Pregunta: %s", request.question)
+        # Step 3: Build full prompt
+        full_prompt = f"""{SYSTEM_PROMPT}
 
-    # Ejecutar agente (extrae nombre/email, manda email si corresponde y responde con LLM)
-    agent_result = agent.invoke({"input": request.question})
+        Context:
+        {context}
 
-    logging.info(">> 🔍 Estado completo del agente: %s", agent_result)
+        User question:
+        {request.prompt}
+        """
 
-    logging.info(">> Nombre detectado: %s", agent_result.get("name"))
-    logging.info(">> Email detectado: %s", agent_result.get("email"))
-    logging.info(">> Email enviado: %s", agent_result.get("email_sent"))
-    if agent_result.get("error"):
-        logging.error("❌ Error al enviar email: %s", agent_result["error"])
-    logging.info(">> Respuesta del agente: %s", agent_result.get("response"))
+        # Step 4: Get response from Gemini-Pro
+        try:
+            response = chat_model.invoke(full_prompt)
+            bot_reply = response.content if response else "⚠️ Could not generate a response."
+        except Exception as e:
+            logging.error(f"❌ Error invoking Gemini-Pro: {e}", exc_info=True)
+            bot_reply = f"⚠️ Error: {str(e)}"
 
-    return {
-        "response": agent_result.get("response"),
-        "detected_name": agent_result.get("name"),
-        "detected_email": agent_result.get("email"),
-        "email_sent": agent_result.get("email_sent", False),
-        "error": agent_result.get("error")
-    }
+        # Add welcome message if it's the first message in the session
+        if is_first_message:
+            greeting = (
+                "Hey there! I’m the QuistBuilder assistant—excited to help you out!\n"
+                "To get started, may I have your name, email, and a bit about the service you’re looking for?"
+            )
+            bot_reply = f"{greeting}\n\n{bot_reply}"
+
+        return {
+            "response": bot_reply,
+            "detected_name": agent_output.get("name"),
+            "detected_email": agent_output.get("email"),
+            "email_sent": agent_output.get("email_sent", False),
+            "error": agent_output.get("error")
+        }
+
+    except Exception as e:
+        logging.error(f"❌ General error in /chat endpoint: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/")
+def home():
+    return {"message": "Chat API with Gemini-Pro and RAG is running successfully."}
