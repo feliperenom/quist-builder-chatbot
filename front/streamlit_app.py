@@ -7,15 +7,17 @@ API_URL = "https://quist-builder-chatbot-back-496862884065.us-central1.run.app/c
 
 st.set_page_config(page_title="QuistBuilder Chatbot", layout="wide")
 
-# ---------- SIDEBAR ----------
-with st.sidebar:
-    st.title("QuistBuilder Chatbot")
-    st.markdown("---")
-    st.markdown("📄 Model: Gemini + ChromaDB")
-
 # ---------- GLOBAL STATE ----------
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [
+        {
+            "role": "assistant",
+            "content": (
+                "Hey there! I’m the QuistBuilder assistant—excited to help you out!\n"
+                "To get started, may I have your name, email, and a bit about the service you’re looking for?"
+            )
+        }
+    ]
 
 if "session_id" not in st.session_state:
     st.session_state.session_id = str(uuid.uuid4())
