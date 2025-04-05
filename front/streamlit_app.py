@@ -20,9 +20,6 @@ if "messages" not in st.session_state:
 if "session_id" not in st.session_state:
     st.session_state.session_id = str(uuid.uuid4())
 
-# ---------- TITLE ----------
-st.title("💬 WhatsApp-style Chat")
-
 # ---------- DISPLAY MESSAGE HISTORY ----------
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
