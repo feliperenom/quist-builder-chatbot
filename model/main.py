@@ -27,14 +27,14 @@ if not service_account_key or not project_id:
 # ───────────────────────────────────────────────────────────────
 # ───────────────────────────────────────────────────────────────
 
-# credentials_path = "/tmp/service-account.json"
+credentials_path = "/tmp/service-account.json"
 
-# try:
-#      with open(credentials_path, "w") as f:
-#          f.write(service_account_key)
-#      os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
-# except Exception as e:
-#      raise RuntimeError(f"Error al escribir el archivo de credenciales: {e}")
+try:
+     with open(credentials_path, "w") as f:
+         f.write(service_account_key)
+     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
+except Exception as e:
+     raise RuntimeError(f"Error al escribir el archivo de credenciales: {e}")
 
 # ───────────────────────────────────────────────────────────────
 # ───────────────────────────────────────────────────────────────
