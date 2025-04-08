@@ -15,6 +15,10 @@ else:
 def retrieve_documents(query, k=3):
     """Retrieves relevant documents from ChromaDB"""
     try:
+        # Comprobar si la consulta es sobre información de contacto
+        contact_keywords = ["contact", "email", "phone", "address", "location", "reach"]
+        is_contact_query = any(keyword in query.lower() for keyword in contact_keywords)
+        
         # Usar un modelo de embeddings más robusto
         embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
         
@@ -27,7 +31,15 @@ def retrieve_documents(query, k=3):
         # Cargar la base vectorial
         vectordb = Chroma(persist_directory=CHROMA_DB_DIR, embedding_function=embeddings)
         
-        # Intentar primero con búsqueda de similitud directa para mayor precisión
+        # Si es una consulta de contacto, buscar específicamente información de contacto
+        if is_contact_query:
+            # Usar una consulta específica para encontrar información de contacto
+            contact_results = vectordb.similarity_search_with_score("QuistBuilder contact information email phone address", k=2)
+            if contact_results:
+                contact_docs = [doc for doc, score in contact_results]
+                return "\n\n".join(doc.page_content for doc in contact_docs)
+        
+        # Búsqueda normal para otras consultas
         results = vectordb.similarity_search_with_score(query, k=k)
         
         if not results:

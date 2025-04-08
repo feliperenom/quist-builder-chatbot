@@ -27,14 +27,14 @@ if not service_account_key or not project_id:
 # ───────────────────────────────────────────────────────────────
 # ───────────────────────────────────────────────────────────────
 
-credentials_path = "/tmp/service-account.json"
+# credentials_path = "/tmp/service-account.json"
 
-try:
-     with open(credentials_path, "w") as f:
-         f.write(service_account_key)
-     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
-except Exception as e:
-     raise RuntimeError(f"Error al escribir el archivo de credenciales: {e}")
+# try:
+#      with open(credentials_path, "w") as f:
+#          f.write(service_account_key)
+#      os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
+# except Exception as e:
+#      raise RuntimeError(f"Error al escribir el archivo de credenciales: {e}")
 
 # ───────────────────────────────────────────────────────────────
 # ───────────────────────────────────────────────────────────────
@@ -123,13 +123,14 @@ def chat(request: ChatRequest):
             logging.error(f"❌ Error invoking Gemini-Pro: {e}", exc_info=True)
             bot_reply = f"⚠️ Error: {str(e)}"
 
-        # Si es el primer mensaje, solo mostrar el saludo
-        if is_first_message:
+        # Si es el primer mensaje Y no hay una pregunta específica, mostrar el saludo
+        # Pero si hay una pregunta específica (como información de contacto), responder a ella
+        if is_first_message and not any(keyword in request.prompt.lower() for keyword in ["contact", "email", "phone", "address", "location", "reach"]):
             greeting = (
                 "Hey there! I'm the QuistBuilder assistant—excited to help you out!\n"
                 "To get started, may I have your name, email, and a bit about the service you're looking for?"
             )
-            bot_reply = greeting  # Usar solo el saludo, sin agregar la respuesta del modelo
+            bot_reply = greeting  # Use only the greeting, without adding the model's response
 
         return {
             "response": bot_reply,
