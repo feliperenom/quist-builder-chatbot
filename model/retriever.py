@@ -1,7 +1,15 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
-CHROMA_DB_DIR = "chroma_db"
+import os
+
+# Determinar si estamos en desarrollo o producción
+if os.path.exists("model/chroma_db"):
+    # Estamos en desarrollo (ruta relativa al directorio raíz)
+    CHROMA_DB_DIR = "model/chroma_db"
+else:
+    # Estamos en producción (ruta relativa al directorio actual)
+    CHROMA_DB_DIR = "chroma_db"
 
 def retrieve_documents(query, k=3):
     """Retrieves relevant documents from ChromaDB"""

@@ -5,8 +5,18 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
 
-DATA_DIR = "model/data" 
-CHROMA_DB_DIR = "model/chroma_db"
+import sys
+import os
+
+# Determinar si estamos en desarrollo o producción
+if os.path.exists("model/data"):
+    # Estamos en desarrollo (ruta relativa al directorio raíz)
+    DATA_DIR = "model/data"
+    CHROMA_DB_DIR = "model/chroma_db"
+else:
+    # Estamos en producción (ruta relativa al directorio actual)
+    DATA_DIR = "data"
+    CHROMA_DB_DIR = "chroma_db"
 
 def extract_text_from_markdown(directory):
     """Extracts text from all Markdown files in a folder."""

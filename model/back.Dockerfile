@@ -28,5 +28,8 @@ COPY . .
 # Expose the port Cloud Run uses
 EXPOSE 8080
 
-# Start FastAPI using Uvicorn on port 8080
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Make startup script executable
+RUN chmod +x startup.sh
+
+# Start using the startup script
+CMD ["/bin/bash", "startup.sh"]
