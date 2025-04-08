@@ -43,9 +43,11 @@ if not service_account_key or not project_id:
 # Initialize VertexAI
 try:
     aiplatform.init(project=project_id, location="us-central1")
+    logging.info("✅ Vertex AI initialized successfully")
 except Exception as e:
-    logging.error(f"Error initializing Vertex AI: {e}")
-    raise
+    logging.error(f"❌ Error initializing Vertex AI: {e}")
+    # No lanzar la excepción, permitir que la aplicación continúe
+    logging.warning("⚠️ Continuing without Vertex AI initialization")
 
 seen_sessions = set()
 
@@ -79,19 +81,26 @@ class ChatRequest(BaseModel):
     session_id: str
 
 @app.post("/chat")
-def chat(request: ChatRequest):
+async def chat(request: ChatRequest):
     try:
-        session_id = request.session_id or "default_session"
+        logging.info(f"📩 Received chat request: {request.prompt[:50]}...")
+        
+        session_id = request.session_id
         is_first_message = session_id not in seen_sessions
-
-        if is_first_message:
-            seen_sessions.add(session_id)
-
-        # Step 1: Run contact agent
-        agent_output = agent.invoke({
-            "input": request.prompt,
-            "session_id": session_id
-        })
+        seen_sessions.add(session_id)
+        
+        # Step 1: Process with contact agent
+        try:
+            agent = create_contact_agent()
+            
+            agent_output = agent.invoke({
+                "input": request.prompt,
+                "session_id": session_id
+            })
+            logging.info("✅ Contact agent processed successfully")
+        except Exception as e:
+            logging.error(f"❌ Error in contact agent: {e}")
+            agent_output = {"name": None, "email": None, "email_sent": False, "error": str(e)}
 
         # Step 2: Retrieve relevant context
         try:
@@ -117,11 +126,14 @@ def chat(request: ChatRequest):
 
         # Step 4: Get response from Gemini-Pro
         try:
+            logging.info("🤖 Invoking Gemini-Pro model")
             response = chat_model.invoke(full_prompt)
             bot_reply = response.content if response else "⚠️ Could not generate a response."
+            logging.info("✅ Gemini-Pro response generated successfully")
         except Exception as e:
             logging.error(f"❌ Error invoking Gemini-Pro: {e}", exc_info=True)
-            bot_reply = f"⚠️ Error: {str(e)}"
+            # Proporcionar una respuesta alternativa en caso de error
+            bot_reply = "I'm currently experiencing some technical difficulties. Please try again later or contact QuistBuilder directly at info@quistbuilder.com or (800) 650-2380."
 
         # Si es el primer mensaje Y no hay una pregunta específica, mostrar el saludo
         # Pero si hay una pregunta específica (como información de contacto), responder a ella
