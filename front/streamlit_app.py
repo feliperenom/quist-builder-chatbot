@@ -3,7 +3,7 @@ import requests
 import uuid
 
 # ---------------- CONFIG ----------------
-API_URL = "https://quist-builder-chatbot-front-496862884065.us-central1.run.app/chat"
+API_URL = "https://quist-builder-chatbot-back-496862884065.us-central1.run.app/chat"
 
 st.set_page_config(page_title="QuistBuilder Chatbot", layout="wide")
 
@@ -41,11 +41,21 @@ if prompt := st.chat_input("Type your message..."):
 
     # Call the backend API
     try:
-        response = requests.post(API_URL, json=payload)
-        response.raise_for_status()
-        answer = response.json().get("response", "⚠️ Unable to generate a response.")
+        with st.spinner("Getting response..."):
+            response = requests.post(API_URL, json=payload, timeout=30)
+            response.raise_for_status()
+            answer = response.json().get("response", "⚠️ Unable to generate a response.")
+    except requests.exceptions.ConnectionError:
+        answer = "⚠️ Error connecting to the API. Please check if the backend service is running and accessible."
+    except requests.exceptions.Timeout:
+        answer = "⚠️ The request timed out. The backend service might be overloaded or experiencing issues."
+    except requests.exceptions.HTTPError as e:
+        if e.response.status_code == 403:
+            answer = "⚠️ Access forbidden (403). This could be due to CORS restrictions or service permissions. Make sure the backend service allows requests from this application."
+        else:
+            answer = f"⚠️ HTTP Error: {e.response.status_code} - {e.response.reason}"
     except Exception as e:
-        answer = f"⚠️ Error connecting to the API: {e}"
+        answer = f"⚠️ Error: {e}"
 
     # Show the assistant's response
     st.chat_message("assistant").markdown(answer)
