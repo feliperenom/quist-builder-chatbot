@@ -1,7 +1,16 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
+import os
 
-CHROMA_DB_DIR = "chroma_db"
+# Determinar las rutas correctas basadas en la ubicación actual
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Si estamos en la carpeta model, usar rutas relativas a la carpeta actual
+if os.path.basename(current_dir) == 'model':
+    CHROMA_DB_DIR = os.path.join(current_dir, "chroma_db")
+else:
+    # Si estamos en otra ubicación, usar rutas absolutas
+    CHROMA_DB_DIR = os.path.join(current_dir, "chroma_db")
 
 def retrieve_documents(query, k=3):
     """Retrieves relevant documents from ChromaDB"""

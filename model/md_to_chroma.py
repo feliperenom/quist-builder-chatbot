@@ -1,12 +1,22 @@
 import os
+import sys
 import pypdf
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 from langchain.schema import Document
 
-DATA_DIR = "model/data" 
-CHROMA_DB_DIR = "model/chroma_db"
+# Determinar las rutas correctas basadas en la ubicación actual
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Si estamos en la carpeta model, usar rutas relativas a la carpeta actual
+if os.path.basename(current_dir) == 'model':
+    DATA_DIR = os.path.join(current_dir, "data")
+    CHROMA_DB_DIR = os.path.join(current_dir, "chroma_db")
+else:
+    # Si estamos en otra ubicación, usar rutas absolutas
+    DATA_DIR = os.path.join(current_dir, "data")
+    CHROMA_DB_DIR = os.path.join(current_dir, "chroma_db")
 
 def extract_text_from_markdown(directory):
     """Extracts text from all Markdown files in a folder."""
