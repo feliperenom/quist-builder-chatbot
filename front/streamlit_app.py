@@ -41,8 +41,9 @@ if prompt := st.chat_input("Type your message..."):
 
     # Call the backend API
     try:
-        with st.spinner("Getting response..."):
-            response = requests.post(API_URL, json=payload, timeout=30)
+        with st.spinner("Getting response... This may take up to 2 minutes."):
+            # Aumentar el timeout a 120 segundos (2 minutos)
+            response = requests.post(API_URL, json=payload, timeout=120)
             response.raise_for_status()
             answer = response.json().get("response", "⚠️ Unable to generate a response.")
     except requests.exceptions.ConnectionError:

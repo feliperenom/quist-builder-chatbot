@@ -73,8 +73,8 @@ with open("system_prompt.txt", "r", encoding="utf-8") as f:
 # Initialize contact agent
 agent = create_contact_agent()
 
-# Load Gemini-Pro model
-chat_model = ChatVertexAI(model_name="gemini-2.0-flash-001", temperature=0.0, max_output_tokens=2000)
+# Load Gemini-Pro model - usar el modelo flash para respuestas más rápidas
+chat_model = ChatVertexAI(model_name="gemini-2.0-flash-001", temperature=0.0, max_output_tokens=1000)
 
 class ChatRequest(BaseModel):
     prompt: str
@@ -104,8 +104,8 @@ async def chat(request: ChatRequest):
 
         # Step 2: Retrieve relevant context
         try:
-            # Aumentar el número de documentos a recuperar para mejorar la cobertura
-            context = retrieve_documents(request.prompt, k=15)
+            # Reducir el número de documentos para mejorar la velocidad
+            context = retrieve_documents(request.prompt, k=5)
             if not context.strip():
                 # Proporcionar información básica sobre QuistBuilder si no se encuentra contexto específico
                 context = "QuistBuilder is a results-driven internet marketing agency based in Emerald Isle, NC. We've been helping businesses grow for over 10 years with powerful websites, SEO, paid ads, and AI integrations. Our team builds optimized websites, drives targeted traffic, and helps convert that traffic into real leads and customers."

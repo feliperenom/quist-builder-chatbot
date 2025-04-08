@@ -46,14 +46,15 @@ def retrieve_documents(query, k=3):
             return "QuistBuilder is a digital marketing agency specializing in SEO, web design, and online advertising. You can contact us at info@quistbuilder.com or (800) 650-2380."
         
         # Si es una consulta de contacto, proporcionar información de contacto directamente
+        # Esto evita tener que buscar en la base vectorial, lo que acelera la respuesta
         if is_contact_query:
             contact_info = """## Contact Info
 
 **Main Contact:**
 
-📧 Email: info@quistbuilder.com
-📞 Phone: (800) 650-2380
-🌐 Website: www.quistbuilder.com
+Email: info@quistbuilder.com
+Phone: (800) 650-2380
+Website: www.quistbuilder.com
 
 **Office Location:**
 
@@ -68,24 +69,21 @@ Closed Saturday & Sunday"""
             logging.info("✅ Returning hardcoded contact information")
             return contact_info
             
-        # Búsqueda normal para otras consultas
+        # Búsqueda normal para otras consultas - optimizada para velocidad
         try:
-            results = vectordb.similarity_search_with_score(query, k=k)
+            # Usar similarity_search directamente es más rápido que similarity_search_with_score
+            docs = vectordb.similarity_search(query, k=k)
             
-            if not results:
-                # Si no hay resultados, intentar con el retriever estándar
-                retriever = vectordb.as_retriever(search_kwargs={"k": k})
-                docs = retriever.invoke(query)
-                
-                if not docs:
-                    return "I don't have specific information about that in my knowledge base. QuistBuilder is a digital marketing agency specializing in SEO, web design, and online advertising. You can contact us at info@quistbuilder.com or (800) 650-2380."
-                
-                content = "\n\n".join(doc.page_content for doc in docs)
-            else:
-                # Procesar los resultados de similarity_search_with_score
-                docs = [doc for doc, score in results]
-                content = "\n\n".join(doc.page_content for doc in docs)
+            if not docs:
+                return "QuistBuilder is a digital marketing agency specializing in SEO, web design, and online advertising. You can contact us at info@quistbuilder.com or (800) 650-2380."
             
+            # Limitar la cantidad de texto devuelto para respuestas más rápidas
+            content = "\n\n".join(doc.page_content for doc in docs)
+            
+            # Si el contenido es muy largo, truncarlo
+            if len(content) > 2000:
+                content = content[:2000] + "..."
+                
             return content
         except Exception as e:
             logging.error(f"❌ Error during document retrieval: {e}")
