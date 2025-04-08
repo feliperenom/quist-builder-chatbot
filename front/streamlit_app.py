@@ -3,7 +3,7 @@ import requests
 import uuid
 
 # ---------------- CONFIG ----------------
-API_URL = "http://127.0.0.1:8000/chat"
+API_URL = "https://quist-builder-chatbot-front-496862884065.us-central1.run.app/chat"
 
 st.set_page_config(page_title="QuistBuilder Chatbot", layout="wide")
 
