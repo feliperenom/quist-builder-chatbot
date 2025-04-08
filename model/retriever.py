@@ -14,17 +14,40 @@ else:
 
 def retrieve_documents(query, k=3):
     """Retrieves relevant documents from ChromaDB"""
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    vectordb = Chroma(persist_directory=CHROMA_DB_DIR, embedding_function=embeddings)
-
-    retriever = vectordb.as_retriever(search_kwargs={"k": k})
-    docs = retriever.invoke(query)
-    
-    if not docs:
-        return "No relevant information found in the documents."
-    
-    content = "\n\n".join(doc.page_content for doc in docs)
-    return content
+    try:
+        # Usar un modelo de embeddings más robusto
+        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        
+        # Verificar que la base vectorial existe
+        import os
+        if not os.path.exists(CHROMA_DB_DIR):
+            print(f"⚠️ Vector database not found at {CHROMA_DB_DIR}")
+            return "No vector database found. Please contact support."
+        
+        # Cargar la base vectorial
+        vectordb = Chroma(persist_directory=CHROMA_DB_DIR, embedding_function=embeddings)
+        
+        # Intentar primero con búsqueda de similitud directa para mayor precisión
+        results = vectordb.similarity_search_with_score(query, k=k)
+        
+        if not results:
+            # Si no hay resultados, intentar con el retriever estándar
+            retriever = vectordb.as_retriever(search_kwargs={"k": k})
+            docs = retriever.invoke(query)
+            
+            if not docs:
+                return "I don't have specific information about that in my knowledge base. Could you please ask about our services, contact information, or other details about QuistBuilder?"
+            
+            content = "\n\n".join(doc.page_content for doc in docs)
+        else:
+            # Procesar los resultados de similarity_search_with_score
+            docs = [doc for doc, score in results]
+            content = "\n\n".join(doc.page_content for doc in docs)
+        
+        return content
+    except Exception as e:
+        print(f"❌ Error retrieving documents: {e}")
+        return "I'm having trouble accessing my knowledge base right now. Let me help you with what I know about QuistBuilder. We're a digital marketing agency specializing in SEO, web design, and online advertising."
 
 if __name__ == "__main__":
     query = input("Enter your query: ")

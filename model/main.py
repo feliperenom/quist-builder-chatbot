@@ -95,12 +95,15 @@ def chat(request: ChatRequest):
 
         # Step 2: Retrieve relevant context
         try:
-            context = retrieve_documents(request.prompt, k=10)
+            # Aumentar el número de documentos a recuperar para mejorar la cobertura
+            context = retrieve_documents(request.prompt, k=15)
             if not context.strip():
-                context = "No relevant information found in the knowledge base."
+                # Proporcionar información básica sobre QuistBuilder si no se encuentra contexto específico
+                context = "QuistBuilder is a results-driven internet marketing agency based in Emerald Isle, NC. We've been helping businesses grow for over 10 years with powerful websites, SEO, paid ads, and AI integrations. Our team builds optimized websites, drives targeted traffic, and helps convert that traffic into real leads and customers."
         except Exception as e:
             logging.error(f"❌ Error retrieving context: {e}")
-            context = "Error retrieving context."
+            # Proporcionar información básica en caso de error
+            context = "QuistBuilder is a digital marketing agency specializing in website design, SEO, paid advertising, and AI integration. We help businesses grow their online presence and generate more leads."
 
         # Step 3: Build full prompt
         full_prompt = f"""{SYSTEM_PROMPT}
@@ -120,13 +123,13 @@ def chat(request: ChatRequest):
             logging.error(f"❌ Error invoking Gemini-Pro: {e}", exc_info=True)
             bot_reply = f"⚠️ Error: {str(e)}"
 
-        # Add welcome message if it's the first message in the session
+        # Si es el primer mensaje, solo mostrar el saludo
         if is_first_message:
             greeting = (
-                "Hey there! I’m the QuistBuilder assistant—excited to help you out!\n"
-                "To get started, may I have your name, email, and a bit about the service you’re looking for?"
+                "Hey there! I'm the QuistBuilder assistant—excited to help you out!\n"
+                "To get started, may I have your name, email, and a bit about the service you're looking for?"
             )
-            bot_reply = f"{greeting}\n\n{bot_reply}"
+            bot_reply = greeting  # Usar solo el saludo, sin agregar la respuesta del modelo
 
         return {
             "response": bot_reply,
