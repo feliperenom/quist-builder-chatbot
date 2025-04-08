@@ -27,14 +27,14 @@ if not service_account_key or not project_id:
 # ───────────────────────────────────────────────────────────────
 # ───────────────────────────────────────────────────────────────
 
-# credentials_path = "/tmp/service-account.json"
+credentials_path = "/tmp/service-account.json"
 
-# try:
-#      with open(credentials_path, "w") as f:
-#          f.write(service_account_key)
-#      os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
-# except Exception as e:
-#      raise RuntimeError(f"Error al escribir el archivo de credenciales: {e}")
+try:
+     with open(credentials_path, "w") as f:
+         f.write(service_account_key)
+     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_path
+except Exception as e:
+     raise RuntimeError(f"Error al escribir el archivo de credenciales: {e}")
 
 # ───────────────────────────────────────────────────────────────
 # ───────────────────────────────────────────────────────────────
@@ -42,8 +42,14 @@ if not service_account_key or not project_id:
 
 # Initialize VertexAI
 try:
+    # Verificar que las credenciales están configuradas correctamente
+    if not project_id:
+        logging.warning("⚠️ PROJECT_ID no está configurado. Usando un valor predeterminado para pruebas.")
+        project_id = "quist-builder-chatbot"
+    
+    # Inicializar Vertex AI con manejo de errores mejorado
     aiplatform.init(project=project_id, location="us-central1")
-    logging.info("✅ Vertex AI initialized successfully")
+    logging.info(f"✅ Vertex AI initialized successfully with project_id: {project_id}")
 except Exception as e:
     logging.error(f"❌ Error initializing Vertex AI: {e}")
     # No lanzar la excepción, permitir que la aplicación continúe
@@ -74,7 +80,20 @@ with open("system_prompt.txt", "r", encoding="utf-8") as f:
 agent = create_contact_agent()
 
 # Load Gemini-Pro model - usar el modelo flash para respuestas más rápidas
-chat_model = ChatVertexAI(model_name="gemini-2.0-flash-001", temperature=0.0, max_output_tokens=1000)
+try:
+    chat_model = ChatVertexAI(model_name="gemini-2.0-flash-001", temperature=0.0, max_output_tokens=1000)
+    logging.info("✅ Gemini model loaded successfully")
+except Exception as e:
+    logging.error(f"❌ Error loading Gemini model: {e}")
+    # Crear una función alternativa para simular el modelo en caso de error
+    def fallback_model():
+        class FallbackResponse:
+            def __init__(self, text):
+                self.content = text
+        
+        return FallbackResponse("I'm currently experiencing some technical difficulties. Please contact QuistBuilder directly at info@quistbuilder.com or (800) 650-2380.")
+    
+    chat_model = lambda prompt: fallback_model()
 
 class ChatRequest(BaseModel):
     prompt: str
@@ -124,16 +143,56 @@ async def chat(request: ChatRequest):
         {request.prompt}
         """
 
-        # Step 4: Get response from Gemini-Pro
+        # Step 4: Get response from Gemini-Pro o usar respuesta alternativa
         try:
             logging.info("🤖 Invoking Gemini-Pro model")
-            response = chat_model.invoke(full_prompt)
-            bot_reply = response.content if response else "⚠️ Could not generate a response."
-            logging.info("✅ Gemini-Pro response generated successfully")
+            # Si la consulta es sobre información de contacto, proporcionar directamente la respuesta
+            contact_keywords = ["contact", "email", "phone", "address", "location", "reach"]
+            is_contact_query = any(keyword in request.prompt.lower() for keyword in contact_keywords)
+            
+            if is_contact_query:
+                bot_reply = """Here's our contact information:
+
+**Main Contact:**
+- Email: info@quistbuilder.com
+- Phone: (800) 650-2380
+- Website: www.quistbuilder.com
+
+**Office Location:**
+QuistBuilder
+7901 Emerald Dr, Suite 15
+Emerald Isle, NC 28594
+
+**Office Hours:**
+Monday – Friday: 9 AM – 6 PM EST
+Closed Saturday & Sunday"""
+                logging.info("✅ Provided direct contact information response")
+            else:
+                # Intentar usar el modelo para otras consultas
+                response = chat_model.invoke(full_prompt)
+                bot_reply = response.content if response else "⚠️ Could not generate a response."
+                logging.info("✅ Gemini-Pro response generated successfully")
         except Exception as e:
             logging.error(f"❌ Error invoking Gemini-Pro: {e}", exc_info=True)
             # Proporcionar una respuesta alternativa en caso de error
-            bot_reply = "I'm currently experiencing some technical difficulties. Please try again later or contact QuistBuilder directly at info@quistbuilder.com or (800) 650-2380."
+            if "contact" in request.prompt.lower() or "email" in request.prompt.lower() or "phone" in request.prompt.lower():
+                bot_reply = """Here's our contact information:
+
+**Main Contact:**
+- Email: info@quistbuilder.com
+- Phone: (800) 650-2380
+- Website: www.quistbuilder.com
+
+**Office Location:**
+QuistBuilder
+7901 Emerald Dr, Suite 15
+Emerald Isle, NC 28594
+
+**Office Hours:**
+Monday – Friday: 9 AM – 6 PM EST
+Closed Saturday & Sunday"""
+            else:
+                bot_reply = "I'm currently experiencing some technical difficulties. Please try again later or contact QuistBuilder directly at info@quistbuilder.com or (800) 650-2380."
 
         # Si es el primer mensaje Y no hay una pregunta específica, mostrar el saludo
         # Pero si hay una pregunta específica (como información de contacto), responder a ella
