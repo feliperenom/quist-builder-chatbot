@@ -94,7 +94,7 @@ if prompt := st.chat_input("Type your message..."):
             role = "User" if m["role"] == "user" else "Assistant"
             transcript += f"{role}: {m['content']}\n\n"
 
-        requests.post("http://localhost:8000/send-email", json={
+        requests.post("https://quist-builder-chatbot-back-496862884065.us-central1.run.app/send-email", json={
             "name": "Unknown",
             "email": st.session_state.user_email,
             "phone": st.session_state.user_phone,
@@ -117,7 +117,7 @@ if prompt := st.chat_input("Type your message..."):
         try:
             with st.spinner("Generating response..."):
                 response = requests.post(
-                    "http://localhost:8000/ask/stream",
+                    "https://quist-builder-chatbot-back-496862884065.us-central1.run.app/ask/stream",
                     json={
                         "query": prompt,
                         "chat_history": chat_history,
