@@ -1,0 +1,23 @@
+{
+    
+    "company_overview": "QuistBuilder is a results-driven internet marketing agency based in Emerald Isle, NC. We've been helping businesses grow for over 10 years with powerful websites, SEO, paid ads, and AI integrations. Our team builds optimized websites, drives targeted traffic, and helps convert that traffic into real leads and customers.",
+    "services": {
+        "website_design": "- Built for SEO, speed, and lead generation.\n- Mobile-responsive and fully customizable. \n- WordPress specialists.",
+        "seo": "- Keyword strategy and on-site optimization. \n- Authority building & backlink strategy.\n-  Google Business Profile optimization.\n- Local, regional, and national SEO.",
+        "ppc": "- Google Ads & Facebook Ads. \n- Campaign setup and management.\n- Conversion-focused ad strategies.",
+        "ai_integration": "- AI chatbot setup and training.\n- Automating lead capture and FAQs.\n- AI-powered content creation.",
+"reputation_management": "- Monitor and respond to online reviews.\n- Promote positive reviews.\n- Suppress negatives.\n- Build trust across platforms"
+    },
+    "contact_info": {
+        "main_contact": {
+            "email": "info@quistbuilder.com",
+            "phone": "(800) 650-2380",
+            "website": "www.quistbuilder.com"
+        },
+        "office_location": {
+            "address": "QuistBuilder\n7901 Emerald Dr, Suite 15\nEmerald Isle, NC 28594"
+        },
+        "office_hours": "Monday – Friday: 9 AM – 6 PM EST\nClosed Saturday & Sunday"
+    },
+    "service_area": "We work with clients all over the United States and selectively with international businesses. Whether you're local or remote, we can help."
+}
